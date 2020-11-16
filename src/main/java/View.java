@@ -24,7 +24,8 @@ public class View {
 	Group root;
 	HBox hb;
 	Label statusTxt;
-	Label loserTxt;
+	Label p1WallLabel;
+	Label p2WallLabel;
 	
 	
 	public View(Stage theStage, Controller controller) {
@@ -43,12 +44,15 @@ public class View {
 		controller.setHandlerForNewGameBtn(startBtn);
 		statusTxt = new Label();
 		statusTxt.setPadding(new Insets(10,0,0,5));
-		loserTxt = new Label();
-		loserTxt.setPadding(new Insets(10,0,0,5));
+		p1WallLabel = new Label();
+		p1WallLabel.setPadding(new Insets(10,0,0,5));
+		p2WallLabel = new Label();
+		p2WallLabel.setPadding(new Insets(0,0,0,5));
 		
 		gameLog.getChildren().add(startBtn);
 		gameLog.getChildren().add(statusTxt);
-		gameLog.getChildren().add(loserTxt);
+		gameLog.getChildren().add(p1WallLabel);
+		gameLog.getChildren().add(p2WallLabel);
 		
 		drawBoard(17, 17);
 		
@@ -115,6 +119,9 @@ public class View {
 				if(gameBoard[i][j].getOccupied()!=null) {
 					tiles[i][j].setPlayerOccupied(gameBoard[i][j].getOccupied().getPlayerNum());
 				}
+				if(gameBoard[i][j].isBuilt()) {
+					tiles[i][j].setWallBuilt();
+				}
 			}
 		}
 	}	
@@ -132,7 +139,6 @@ public class View {
 	public void unSetPossiblePlayerMoves(ArrayList<TileModel> possibleTileMoves, Player player) {
 		int currX = player.getX();
 		int currY = player.getY();
-		tiles[currY][currX].unhighlight();
 		int x,y;
 		for(TileModel tile : possibleTileMoves) {
 			x = tile.getX();
@@ -142,13 +148,73 @@ public class View {
 		}
 	}
 	
-	public Label getStatusLabel() {
-		return statusTxt;
+	public void currentPlayerUnHighlight(Player player) {
+		tiles[player.getY()][player.getX()].unhighlight();
 	}
 	
-public void gameWon(Player winner, Player loser) {
+	public void setAllWallsClickable() {
+		for(int i=0;i<17;i++) {
+			for(int j=0;j<17;j++) {
+				if(tiles[i][j].getTileType()==Tile.WALL) {
+					if(tiles[i][j].getOccupiedSatus()==false) {
+						tiles[i][j].setWallPrepEventHandler(controller, j, i);
+					}
+					else tiles[i][j].unSetWallPrepEventHandler();
+				}
+			}
+		}
+	}
+	
+	public void unSetWallsClickable() {
+		for(int i=0;i<17;i++) {
+			for(int j=0;j<17;j++) {
+				if(tiles[i][j].getTileType()==Tile.WALL) {
+					tiles[i][j].unSetWallPrepEventHandler();
+				}
+			}
+		}
+	}
+	
+	public void setUnPrepWalls(int wallX, int wallY) {
+		tiles[wallY][wallX].setWallUnprepEventHandler(controller, wallX, wallY);
+	}
+	
+	public void setPossibleWalls(ArrayList<TileModel> possibleWallBuilds, int wallX, int wallY) {
+		int x,y;
+		for(TileModel tile : possibleWallBuilds) {
+			x = tile.getX();
+			y = tile.getY();
+			tiles[y][x].setWallBuildable();
+			tiles[y][x].setWallBuildEventHandler(controller, x, y, wallX, wallY);
+		}
+	}
+	
+	public void unSetPossibleWalls(ArrayList<TileModel> possibleWallBuilds, int wallX, int wallY) {
+		tiles[wallY][wallX].unhighlight();
+		int x,y;
+		for(TileModel tile : possibleWallBuilds) {
+			x = tile.getX();
+			y = tile.getY();
+			tiles[y][x].unhighlight();
+			tiles[y][x].unSetWallPrepEventHandler();
+		}
+	}
+
+	public void gameWon(Player winner, Player loser) {
 		statusTxt.setText("Player "+winner.getPlayerNum()+" Won!");
-		loserTxt.setText("Player "+loser.getPlayerNum()+" Sucks ass");
+		p1WallLabel.setText("Player "+loser.getPlayerNum()+" Sucks ass");
+	}
+	
+	public void updateLabel(int playerNum, int p1Walls, int p2Walls) {
+		statusTxt.setText("Player "+playerNum+"'s turn");
+		p1WallLabel.setText("Player 1 walls: "+p1Walls);
+		p2WallLabel.setText("Player 2 walls: "+p2Walls);
+	}
+	
+	public void clearLabels() {
+		statusTxt.setText("");
+		p1WallLabel.setText("");
+		p2WallLabel.setText("");
 	}
 	
 	

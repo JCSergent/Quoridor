@@ -8,11 +8,11 @@ public class WallTile extends TileModel{
 		isBuilt = false;
 	}
 	
-	public void BuildWall() {
+	public void buildWall() {
 		isBuilt = true;
 	}
 	
-	public void BreakWall() {
+	public void breakWall() {
 		isBuilt = false;
 	}
 	

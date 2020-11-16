@@ -31,9 +31,9 @@ public class TileModel {
 	
 	public Player getOccupied() {return null;}
 	
-	public void BuildWall() {}
+	public void buildWall() {}
 	
-	public void BreakWall() {}
+	public void breakWall() {}
 	
 	public boolean isBuilt() {return false;}
 	

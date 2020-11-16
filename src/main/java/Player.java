@@ -2,14 +2,14 @@
 public class Player {
 	
 	int playerNum;
-	int numOfWalls;
+	int wallCount;
 	int xPos;
 	int yPos;
 	
 	
 	public Player(int playerNum) {
 		this.playerNum = playerNum;
-		numOfWalls = 10;
+		wallCount = 10;
 		
 		if(playerNum==1) {
 			xPos = 0;
@@ -39,6 +39,14 @@ public class Player {
 	
 	public void setY(int yPos) {
 		this.yPos = yPos;
+	}
+	
+	public int getWallCount() {
+		return wallCount;
+	}
+	
+	public void setWallCount(int walls) {
+		this.wallCount = walls;
 	}
 	
 }

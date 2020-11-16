@@ -11,7 +11,7 @@ public class TileView {
 	
 	Tile tileType;
 	Rectangle rect;
-	boolean isOccupied = false;;
+	boolean isOccupied = false;
 	
 	
 	TileView(Tile tileType, int xPos, int yPos, int height, int width ){
@@ -60,8 +60,6 @@ public class TileView {
 		}
 	}
 	
-	
-	
 	public void setPossibleMove(int playerNum) {
 		switch(  playerNum ) {
 		case 1:
@@ -73,6 +71,16 @@ public class TileView {
 		}
 	}
 	
+	public void setWallBuilt() {
+		isOccupied = true;
+		rect.setFill(Color.HOTPINK);
+	}
+	
+	public void setWallBuildable() {
+		rect.setFill(Color.LIGHTPINK);
+	}
+	
+	
 	public void setPlayerMoveEventHandler(Controller controller, int x, int y) {
 		rect.setOnMouseClicked( event -> {
 			controller.movePlayer(x, y);
@@ -82,6 +90,30 @@ public class TileView {
 	public void unSetPlayerMoveEventHandler() {
 		rect.setOnMouseClicked(event -> {
 			
+		});
+	}
+	
+	public void setWallPrepEventHandler(Controller controller, int x, int y) {
+		rect.setOnMouseClicked( event -> {
+			setWallBuilt();
+			controller.prepWall(x, y);
+		});
+	}
+	
+	public void unSetWallPrepEventHandler() {
+		rect.setOnMouseClicked( event -> {
+		});
+	}
+	
+	public void setWallUnprepEventHandler(Controller controller, int wallX, int wallY) {
+		rect.setOnMouseClicked( event -> {
+			controller.unPrepWall(wallX, wallY);
+		});
+	}
+	
+	public void setWallBuildEventHandler(Controller controller, int wall1X, int wall1Y, int wall2X, int wall2Y) {
+		rect.setOnMouseClicked(event -> {
+			controller.buildWall(wall1X, wall1Y, wall2X, wall2Y);
 		});
 	}
 	
