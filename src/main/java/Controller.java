@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -6,6 +8,14 @@ public class Controller extends Application {
 	
 	Model model;
 	View view;
+	GameBoard gameBoard;
+	
+	Player player1;
+	Player player2;
+	Player currPlayer;
+	
+	ArrayList<TileModel> possiblePlayerMoves;
+	
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -27,27 +37,57 @@ public class Controller extends Application {
 	
 	public void startGame() {
 		System.out.println("New Game");
-		Player player1 = new Player(1);
-		Player player2 = new Player(2);
+		player1 = new Player(1);
+		player2 = new Player(2);
 		
 		model.resetGameBoard();
-		GameBoard gameBoard = model.getGameBoard();
+		gameBoard = model.getGameBoard();
 		gameBoard.addPlayer(player1);
 		gameBoard.addPlayer(player2);
 		
-		view.updateGameBoard(gameBoard.gameBoard);
-//		boolean gamePlayed = true;
-//		boolean changeTurnFlag = false;
-//		while(gamePlayed) {
-//			
-//			
-//			
-//			view.updateGameBoard(gameBoard.gameBoard);
-//			
-//			
-//		}
+		view.drawBoard(17, 17);
 		
+		newTurn(player1);	
+	}
+	
+	public void newTurn(Player currPlayer) {
+		if(!checkWinConditions()) {
+		
+			this.currPlayer = currPlayer;
+			view.getStatusLabel().setText("Player "+currPlayer.getPlayerNum()+"'s turn");
+			possiblePlayerMoves = gameBoard.getPossiblePlayerMoves(currPlayer);
+			view.setPossiblePlayerMoves(possiblePlayerMoves, currPlayer);
+		
+			view.updateGameBoard(gameBoard.gameBoard);
+		}
+		else view.gameWon(this.currPlayer, currPlayer);
 		
 	}
+	
+	public void movePlayer(int newX, int newY) {
+		view.unSetPossiblePlayerMoves(possiblePlayerMoves, currPlayer);
+		gameBoard.movePlayer(currPlayer, newX, newY);
+		currPlayer.setX(newX);
+		currPlayer.setY(newY);
+		
+		if(currPlayer.equals(player1)) {
+			newTurn(player2);
+		}
+		else newTurn(player1);
+		
+	}
+	
+	public boolean checkWinConditions() {
+		if(player1.getX()==16) {
+			return true;
+		}
+		if(player2.getX()==0) {
+			return true;
+		}
+		else return false;
+	}
+	
+	
+	
 	
 }

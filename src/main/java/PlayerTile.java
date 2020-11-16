@@ -13,6 +13,7 @@ public class PlayerTile extends TileModel{
 		isOccupied = player;
 	}
 	
+	@Override
 	public Player getOccupied() {
 		return isOccupied;
 	}

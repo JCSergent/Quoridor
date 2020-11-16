@@ -16,4 +16,7 @@ public class WallTile extends TileModel{
 		isBuilt = false;
 	}
 	
+	public boolean isBuilt() {
+		return isBuilt;
+	}
 }

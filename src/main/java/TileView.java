@@ -8,9 +8,10 @@ enum Tile {
 }
 
 public class TileView {
-
+	
 	Tile tileType;
 	Rectangle rect;
+	boolean isOccupied = false;;
 	
 	
 	TileView(Tile tileType, int xPos, int yPos, int height, int width ){
@@ -32,21 +33,8 @@ public class TileView {
 		return tileType;
 	}
 	
-	public void highlight() {
-		switch( tileType ) {
-		case PLAYER: 
-			rect.setFill(Color.RED);
-			break;
-		case WALL:
-			rect.setFill(Color.BLUE);
-			break;
-		case INTERSECT:
-			rect.setFill(Color.GREEN);
-			break;
-		}
-	}
-	
 	public void unhighlight() {
+		isOccupied = false;
 		switch( tileType ) {
 		case PLAYER: 
 			rect.setFill(Color.GREY);
@@ -58,6 +46,47 @@ public class TileView {
 			rect.setFill(Color.BEIGE);
 			break;
 		}
+	}
+	
+	public void setPlayerOccupied(int playerNum) {
+		isOccupied = true;
+		switch(  playerNum ) {
+		case 1:
+			rect.setFill(Color.BLUE);
+			break;
+		case 2:
+			rect.setFill(Color.GREEN);
+			break;
+		}
+	}
+	
+	
+	
+	public void setPossibleMove(int playerNum) {
+		switch(  playerNum ) {
+		case 1:
+			rect.setFill(Color.LIGHTBLUE);
+			break;
+		case 2:
+			rect.setFill(Color.LIGHTGREEN);
+			break;
+		}
+	}
+	
+	public void setPlayerMoveEventHandler(Controller controller, int x, int y) {
+		rect.setOnMouseClicked( event -> {
+			controller.movePlayer(x, y);
+		});
+	}
+	
+	public void unSetPlayerMoveEventHandler() {
+		rect.setOnMouseClicked(event -> {
+			
+		});
+	}
+	
+	public boolean getOccupiedSatus() {
+		return isOccupied;
 	}
 	
 	

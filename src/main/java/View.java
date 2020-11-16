@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,6 +14,8 @@ import javafx.stage.Stage;
 
 public class View {
 	
+	Controller controller;
+	
 	final private int CANVASWIDTH = 825;
 	final private int CANVASHEIGHT = 635;
 	
@@ -19,6 +23,8 @@ public class View {
 	
 	Group root;
 	HBox hb;
+	Label statusTxt;
+	Label loserTxt;
 	
 	
 	public View(Stage theStage, Controller controller) {
@@ -26,7 +32,7 @@ public class View {
 		theStage.setTitle("Coridor but cool");
 		root = new Group();
 		Scene theScene = new Scene(root,CANVASWIDTH, CANVASHEIGHT);
-		
+		this.controller = controller;
 		theStage.setScene(theScene);
 		
 		HBox hb = new HBox();
@@ -35,11 +41,14 @@ public class View {
 		
 		Button startBtn = new Button("New Game");
 		controller.setHandlerForNewGameBtn(startBtn);
-		Label statusTxt = new Label("Player 1's Turn");
+		statusTxt = new Label();
 		statusTxt.setPadding(new Insets(10,0,0,5));
+		loserTxt = new Label();
+		loserTxt.setPadding(new Insets(10,0,0,5));
 		
 		gameLog.getChildren().add(startBtn);
 		gameLog.getChildren().add(statusTxt);
+		gameLog.getChildren().add(loserTxt);
 		
 		drawBoard(17, 17);
 		
@@ -104,15 +113,44 @@ public class View {
 		for(int i=0;i<17;i++) {
 			for(int j=0;j<17;j++) {
 				if(gameBoard[i][j].getOccupied()!=null) {
-					tiles[i][j].highlight();
+					tiles[i][j].setPlayerOccupied(gameBoard[i][j].getOccupied().getPlayerNum());
 				}
 			}
 		}
 	}	
 	
-	//TODO: Method that lightly highlights possible locations the player can jump too
-	public void displayPossiblePlayerMoves(Player player) {
-		
+	public void setPossiblePlayerMoves(ArrayList<TileModel> possibleTileMoves, Player currPlayer) {
+		int x, y;
+		for(TileModel tile : possibleTileMoves) {
+			x = tile.getX();
+			y = tile.getY();
+			tiles[y][x].setPossibleMove(currPlayer.getPlayerNum());
+			tiles[y][x].setPlayerMoveEventHandler(controller, x , y);
+		}
 	}
+	
+	public void unSetPossiblePlayerMoves(ArrayList<TileModel> possibleTileMoves, Player player) {
+		int currX = player.getX();
+		int currY = player.getY();
+		tiles[currY][currX].unhighlight();
+		int x,y;
+		for(TileModel tile : possibleTileMoves) {
+			x = tile.getX();
+			y = tile.getY();
+			tiles[y][x].unhighlight();
+			tiles[y][x].unSetPlayerMoveEventHandler();
+		}
+	}
+	
+	public Label getStatusLabel() {
+		return statusTxt;
+	}
+	
+public void gameWon(Player winner, Player loser) {
+		statusTxt.setText("Player "+winner.getPlayerNum()+" Won!");
+		loserTxt.setText("Player "+loser.getPlayerNum()+" Sucks ass");
+	}
+	
+	
 }
 	

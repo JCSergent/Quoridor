@@ -21,6 +21,10 @@ public class Player {
 		}
 	}
 	
+	public int getPlayerNum() {
+		return playerNum;
+	}
+	
 	public int getX() {
 		return xPos;
 	}
@@ -29,5 +33,12 @@ public class Player {
 		return yPos;
 	}
 	
+	public void setX(int xPos) {
+		this.xPos = xPos;
+	}
+	
+	public void setY(int yPos) {
+		this.yPos = yPos;
+	}
 	
 }

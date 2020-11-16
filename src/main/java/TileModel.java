@@ -5,6 +5,7 @@ public class TileModel {
 	int x;
 	int y;
 	Player isOccupied;
+	boolean isBuilt;
 	
 	
 	public TileModel(Tile tileType, int x, int y) {
@@ -18,6 +19,14 @@ public class TileModel {
 		return tileType;
 	}
 	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
 	public void setOccupied(Player player) {}
 	
 	public Player getOccupied() {return null;}
@@ -25,6 +34,8 @@ public class TileModel {
 	public void BuildWall() {}
 	
 	public void BreakWall() {}
+	
+	public boolean isBuilt() {return false;}
 	
 	
 	
