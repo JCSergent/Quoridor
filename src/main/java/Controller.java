@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class Controller extends Application {
@@ -13,10 +14,37 @@ public class Controller extends Application {
 	@Override
 	public void start(Stage theStage) {
 		model = new Model();
-		view = new View(theStage);
+		view = new View(theStage, this);
 		
+		
+	}
+	
+	public void setHandlerForNewGameBtn(Button startBtn) {
+		startBtn.setOnAction(event -> {
+			startGame();
+		});
+	}
+	
+	public void startGame() {
+		Player player1 = new Player(1);
+		Player player2 = new Player(2);
+		
+		model.resetGameBoard();
 		GameBoard gameBoard = model.getGameBoard();
-		gameBoard.addPlayer(0, 8);
+		gameBoard.addPlayer(player1);
+		gameBoard.addPlayer(player2);
+		
+		System.out.println("TEST");
+		
+		boolean gamePlayed = true;
+		boolean changeTurnFlag = false;
+//		while(gamePlayed) {
+//			
+//			view.updateGameBoard(gameBoard);
+//			
+//			
+//		}
+		
 		
 	}
 	

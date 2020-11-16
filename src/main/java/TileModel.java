@@ -5,27 +5,28 @@ public class TileModel {
 	int x;
 	int y;
 	
-	//Player
-	boolean isOccupied = false;
-	
-	//Wall
-	boolean isBuilt = false;
-	
-	//Intersect
 	
 	public TileModel(Tile tileType, int x, int y) {
 		this.tileType = tileType;
 		this.x = x;
 		this.y = y;
 		
-		switch( tileType ) {
-		case PLAYER:
-			break;
-		case WALL:
-			break;
-		case INTERSECT:
-			break;
-		}
 	}
+	
+	public Tile getTileType() {
+		return tileType;
+	}
+	
+	public void setOccupied(Player player) {}
+	
+	public Player getOccupied() {return null;}
+	
+	public void BuildWall() {}
+	
+	public void BreakWall() {}
+	
+	
+	
+	
 	
 }

@@ -1,20 +1,27 @@
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class View {
 	
-	final private int CANVASWIDTH = 625;
-	final private int CANVASHEIGHT = 625;
+	final private int CANVASWIDTH = 825;
+	final private int CANVASHEIGHT = 635;
 	
 	TileView[][] tiles;
 	
 	Group root;
+	HBox hb;
 	
 	
-	public View(Stage theStage) {
+	public View(Stage theStage, Controller controller) {
 		
 		theStage.setTitle("Coridor but cool");
 		root = new Group();
@@ -22,14 +29,28 @@ public class View {
 		
 		theStage.setScene(theScene);
 		
+		HBox hb = new HBox();
+		VBox gameLog = new VBox();
+		gameLog.setPadding(new Insets(20, 0, 0, 10));
+		
+		Button startBtn = new Button("New Game");
+		controller.setHandlerForNewGameBtn(startBtn);
+		Label statusTxt = new Label("Player 1's Turn");
+		statusTxt.setPadding(new Insets(10,0,0,5));
+		
+		gameLog.getChildren().add(startBtn);
+		gameLog.getChildren().add(statusTxt);
+		
 		drawBoard(17, 17);
 		
+		root.getChildren().add(gameLog);
 		theStage.show();
 	}
 	
 	public void drawBoard(int x, int y) {
+		FlowPane fp = new FlowPane();
 		tiles = new TileView[x][y];
-		int posX = 10;
+		int posX = 200;
 		int posY = 10;
 		boolean alternatingFlag = false;
 		boolean wallFlag = false;
@@ -67,7 +88,7 @@ public class View {
 				
 			}
 			alternatingFlag = false;
-			posX = 10;
+			posX = 200;
 			if(!wallFlag) { 
 				wallFlag = true;
 				posY += 50;
@@ -77,6 +98,10 @@ public class View {
 				posY += 20;
 			}
 		}
+	}
+	
+	public void updateGameBoard(GameBoard gameBoard) {
+		
 	}
 	
 }
