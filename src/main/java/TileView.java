@@ -12,6 +12,7 @@ public class TileView {
 	Tile tileType;
 	Rectangle rect;
 	boolean isOccupied = false;
+	int builtBy;
 	
 	
 	TileView(Tile tileType, int xPos, int yPos, int height, int width ){
@@ -71,13 +72,20 @@ public class TileView {
 		}
 	}
 	
-	public void setWallBuilt() {
+	public void setWallBuilt(Player player) {
 		isOccupied = true;
-		rect.setFill(Color.HOTPINK);
+		builtBy = player.getPlayerNum();
+		if(builtBy==1) {
+			rect.setFill(Color.DARKBLUE);
+		}
+		else  rect.setFill(Color.DARKGREEN);
 	}
 	
-	public void setWallBuildable() {
-		rect.setFill(Color.LIGHTPINK);
+	public void setWallBuildable(int playerNum) {
+		if(playerNum==1) {
+			rect.setFill(Color.LIGHTBLUE);
+		}
+		else rect.setFill(Color.LIGHTGREEN);
 	}
 	
 	
@@ -95,7 +103,7 @@ public class TileView {
 	
 	public void setWallPrepEventHandler(Controller controller, int x, int y) {
 		rect.setOnMouseClicked( event -> {
-			setWallBuilt();
+			setWallBuilt(controller.currPlayer);
 			controller.prepWall(x, y);
 		});
 	}

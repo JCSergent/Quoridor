@@ -7,12 +7,14 @@ public class IntersectTile extends TileModel{
 		super(Tile.INTERSECT, x, y);
 	}
 	
-	public void buildWall() {
+	public void buildWall(Player player) {
 		isBuilt = true;
+		isOccupied = player;
 	}
 	
 	public void breakWall() {
 		isBuilt = false;
+		isOccupied = null;
 	}
 	
 	public boolean isBuilt() {

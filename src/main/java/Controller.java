@@ -60,7 +60,7 @@ public class Controller extends Application {
 			
 			
 			view.setPossiblePlayerMoves(possiblePlayerMoves, currPlayer);
-			view.updateGameBoard(gameBoard.gameBoard);
+			view.updateGameBoard(gameBoard.gameBoard, currPlayer.getPlayerNum());
 			
 			if(currPlayer.getWallCount()!=0) {
 				view.setAllWallsClickable();
@@ -91,7 +91,7 @@ public class Controller extends Application {
 		view.unSetPossiblePlayerMoves(possiblePlayerMoves, currPlayer);
 		view.unSetWallsClickable();
 		view.setUnPrepWalls(wallX, wallY);
-		view.setPossibleWalls(possibleWallBuilds, wallX, wallY);
+		view.setPossibleWalls(possibleWallBuilds, wallX, wallY, currPlayer.getPlayerNum());
 		
 	}
 	
@@ -103,7 +103,7 @@ public class Controller extends Application {
 	
 	
 	public void buildWall(int wall1X, int wall1Y, int wall2X, int wall2Y) {
-		gameBoard.buildWall(wall1X, wall1Y, wall2X, wall2Y);
+		gameBoard.buildWall(wall1X, wall1Y, wall2X, wall2Y, currPlayer);
 		view.unSetPossibleWalls(possibleWallBuilds, wall1X, wall1Y);
 		currPlayer.setWallCount(currPlayer.getWallCount()-1);
 		

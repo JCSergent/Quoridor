@@ -10,6 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class View {
@@ -26,6 +28,8 @@ public class View {
 	Label statusTxt;
 	Label p1WallLabel;
 	Label p2WallLabel;
+	VBox player1Walls;
+	VBox player2Walls;
 	
 	
 	public View(Stage theStage, Controller controller) {
@@ -44,15 +48,30 @@ public class View {
 		controller.setHandlerForNewGameBtn(startBtn);
 		statusTxt = new Label();
 		statusTxt.setPadding(new Insets(10,0,0,5));
+		statusTxt.setFont(new Font(15));
+		
+		HBox playerWalls = new HBox();
+		player1Walls = new VBox();
+		player1Walls.setPadding(new Insets(0,0,0,10));
+		player2Walls = new VBox();
+		player2Walls.setPadding(new Insets(0,0,0,10));
+		
+		playerWalls.getChildren().add(player1Walls);
+		playerWalls.getChildren().add(player2Walls);
+		
+		
 		p1WallLabel = new Label();
-		p1WallLabel.setPadding(new Insets(10,0,0,5));
+		p1WallLabel.setPadding(new Insets(20,0,10,4));
+		p1WallLabel.setTextAlignment(TextAlignment.CENTER);
 		p2WallLabel = new Label();
-		p2WallLabel.setPadding(new Insets(0,0,0,5));
+		p2WallLabel.setPadding(new Insets(20,0,10,4));
+		p2WallLabel.setTextAlignment(TextAlignment.CENTER);
+		player1Walls.getChildren().add(p1WallLabel);
+		player2Walls.getChildren().add(p2WallLabel);
 		
 		gameLog.getChildren().add(startBtn);
 		gameLog.getChildren().add(statusTxt);
-		gameLog.getChildren().add(p1WallLabel);
-		gameLog.getChildren().add(p2WallLabel);
+		gameLog.getChildren().add(playerWalls);
 		
 		drawBoard(17, 17);
 		
@@ -113,14 +132,14 @@ public class View {
 		}
 	}
 	
-	public void updateGameBoard(TileModel[][] gameBoard) {
+	public void updateGameBoard(TileModel[][] gameBoard, int playerNum) {
 		for(int i=0;i<17;i++) {
 			for(int j=0;j<17;j++) {
 				if(gameBoard[i][j].getOccupied()!=null) {
 					tiles[i][j].setPlayerOccupied(gameBoard[i][j].getOccupied().getPlayerNum());
 				}
 				if(gameBoard[i][j].isBuilt()) {
-					tiles[i][j].setWallBuilt();
+					tiles[i][j].setWallBuilt(gameBoard[i][j].getOccupied());
 				}
 			}
 		}
@@ -179,12 +198,12 @@ public class View {
 		tiles[wallY][wallX].setWallUnprepEventHandler(controller, wallX, wallY);
 	}
 	
-	public void setPossibleWalls(ArrayList<TileModel> possibleWallBuilds, int wallX, int wallY) {
+	public void setPossibleWalls(ArrayList<TileModel> possibleWallBuilds, int wallX, int wallY, int playerNum) {
 		int x,y;
 		for(TileModel tile : possibleWallBuilds) {
 			x = tile.getX();
 			y = tile.getY();
-			tiles[y][x].setWallBuildable();
+			tiles[y][x].setWallBuildable(playerNum);
 			tiles[y][x].setWallBuildEventHandler(controller, x, y, wallX, wallY);
 		}
 	}
@@ -208,8 +227,32 @@ public class View {
 	
 	public void updateLabel(int playerNum, int p1Walls, int p2Walls) {
 		statusTxt.setText("Player "+playerNum+"'s turn");
-		p1WallLabel.setText("Player 1 walls: "+p1Walls);
-		p2WallLabel.setText("Player 2 walls: "+p2Walls);
+		
+		player1Walls.getChildren().clear();
+		player2Walls.getChildren().clear();
+		p1WallLabel.setText("Player 1 walls");
+		p2WallLabel.setText("Player 2 walls");
+		player1Walls.getChildren().add(p1WallLabel);
+		player2Walls.getChildren().add(p2WallLabel);
+		
+		
+		for(int i=0;i<p1Walls;i++) {
+			Rectangle rect = new Rectangle();
+			rect.setHeight(15);
+			rect.setWidth(80);
+			rect.setFill(Color.DARKBLUE);
+			rect.setStroke(Color.WHITE);
+			player1Walls.getChildren().add(rect);
+		}
+		
+		for(int i=0;i<p2Walls;i++) {
+			Rectangle rect = new Rectangle();
+			rect.setHeight(15);
+			rect.setWidth(80);
+			rect.setFill(Color.DARKGREEN);
+			rect.setStroke(Color.WHITE);
+			player2Walls.getChildren().add(rect);
+		}
 	}
 	
 	public void clearLabels() {

@@ -35,7 +35,7 @@ public class GameBoard {
 		gameBoard[newY][newX].setOccupied(player);
 	}
 	
-	public void buildWall(int wall1X, int wall1Y, int wall2X, int wall2Y) {
+	public void buildWall(int wall1X, int wall1Y, int wall2X, int wall2Y, Player player) {
 		int intersectX, intersectY;
 		if(wall1X==wall2X) {
 			intersectX = wall1X;
@@ -45,28 +45,28 @@ public class GameBoard {
 			intersectX = Math.min(wall1X, wall2X)+1;
 			intersectY = wall1Y;
 		}
-		gameBoard[wall1Y][wall1X].buildWall();
-		gameBoard[wall2Y][wall2X].buildWall();
-		gameBoard[intersectY][intersectX].buildWall();
+		gameBoard[wall1Y][wall1X].buildWall(player);
+		gameBoard[wall2Y][wall2X].buildWall(player);
+		gameBoard[intersectY][intersectX].buildWall(player);
 		
 		//checkIntersects();
 	}
 	
-	public void checkIntersects() {
-		
-		for(int i=0;i<17;i++) {
-			for(int j=0;j<17;j++) {
-				if(i%2!=0 && j%2!=0) { //Parse through all the Intersects
-					int wallCount = 0;
-					if(gameBoard[i][j-1].isBuilt()) {wallCount++;}
-					if(gameBoard[i][j+1].isBuilt()) {wallCount++;}
-					if(gameBoard[i-1][j].isBuilt()) {wallCount++;}
-					if(gameBoard[i+1][j].isBuilt()) {wallCount++;}
-					if(wallCount>=2) { gameBoard[i][j].buildWall(); }
-				}
-			}
-		}
-	}
+//	public void checkIntersects() {
+//		
+//		for(int i=0;i<17;i++) {
+//			for(int j=0;j<17;j++) {
+//				if(i%2!=0 && j%2!=0) { //Parse through all the Intersects
+//					int wallCount = 0;
+//					if(gameBoard[i][j-1].isBuilt()) {wallCount++;}
+//					if(gameBoard[i][j+1].isBuilt()) {wallCount++;}
+//					if(gameBoard[i-1][j].isBuilt()) {wallCount++;}
+//					if(gameBoard[i+1][j].isBuilt()) {wallCount++;}
+//					if(wallCount>=2) { gameBoard[i][j].buildWall(); }
+//				}
+//			}
+//		}
+//	}
 	
 	//TODO: Implement checks to see if a wall is blocking path
 	public ArrayList<TileModel> getPossiblePlayerMoves(Player player) {

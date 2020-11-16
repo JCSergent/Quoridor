@@ -12,6 +12,7 @@ public class TileModel {
 		this.tileType = tileType;
 		this.x = x;
 		this.y = y;
+		isOccupied = null;
 		
 	}
 	
@@ -29,9 +30,9 @@ public class TileModel {
 	
 	public void setOccupied(Player player) {}
 	
-	public Player getOccupied() {return null;}
+	public Player getOccupied() {return isOccupied;}
 	
-	public void buildWall() {}
+	public void buildWall(Player player) {}
 	
 	public void breakWall() {}
 	
