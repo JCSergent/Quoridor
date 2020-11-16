@@ -203,6 +203,7 @@ public class View {
 	public void gameWon(Player winner, Player loser) {
 		statusTxt.setText("Player "+winner.getPlayerNum()+" Won!");
 		p1WallLabel.setText("Player "+loser.getPlayerNum()+" Sucks ass");
+		p2WallLabel.setText("");
 	}
 	
 	public void updateLabel(int playerNum, int p1Walls, int p2Walls) {
@@ -216,7 +217,5 @@ public class View {
 		p1WallLabel.setText("");
 		p2WallLabel.setText("");
 	}
-	
-	
 }
 	

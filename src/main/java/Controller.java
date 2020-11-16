@@ -61,8 +61,7 @@ public class Controller extends Application {
 			
 			view.setPossiblePlayerMoves(possiblePlayerMoves, currPlayer);
 			view.updateGameBoard(gameBoard.gameBoard);
-			System.out.println(currPlayer.getPlayerNum());
-			System.out.println(currPlayer.getWallCount());
+			
 			if(currPlayer.getWallCount()!=0) {
 				view.setAllWallsClickable();
 			}

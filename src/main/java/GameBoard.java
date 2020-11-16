@@ -49,7 +49,7 @@ public class GameBoard {
 		gameBoard[wall2Y][wall2X].buildWall();
 		gameBoard[intersectY][intersectX].buildWall();
 		
-		checkIntersects();
+		//checkIntersects();
 	}
 	
 	public void checkIntersects() {
