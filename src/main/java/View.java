@@ -100,8 +100,19 @@ public class View {
 		}
 	}
 	
-	public void updateGameBoard(GameBoard gameBoard) {
+	public void updateGameBoard(TileModel[][] gameBoard) {
+		for(int i=0;i<17;i++) {
+			for(int j=0;j<17;j++) {
+				if(gameBoard[i][j].getOccupied()!=null) {
+					tiles[i][j].highlight();
+				}
+			}
+		}
+	}	
+	
+	//TODO: Method that lightly highlights possible locations the player can jump too
+	public void displayPossiblePlayerMoves(Player player) {
 		
 	}
-	
 }
+	

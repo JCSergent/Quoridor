@@ -26,6 +26,7 @@ public class Controller extends Application {
 	}
 	
 	public void startGame() {
+		System.out.println("New Game");
 		Player player1 = new Player(1);
 		Player player2 = new Player(2);
 		
@@ -34,13 +35,14 @@ public class Controller extends Application {
 		gameBoard.addPlayer(player1);
 		gameBoard.addPlayer(player2);
 		
-		System.out.println("TEST");
-		
-		boolean gamePlayed = true;
-		boolean changeTurnFlag = false;
+		view.updateGameBoard(gameBoard.gameBoard);
+//		boolean gamePlayed = true;
+//		boolean changeTurnFlag = false;
 //		while(gamePlayed) {
 //			
-//			view.updateGameBoard(gameBoard);
+//			
+//			
+//			view.updateGameBoard(gameBoard.gameBoard);
 //			
 //			
 //		}

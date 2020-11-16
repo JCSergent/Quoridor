@@ -21,6 +21,32 @@ public class TileView {
 		rect.setHeight(height);
 		rect.setWidth(width);
 		
+		unhighlight();
+	}
+	
+	public Rectangle getRectangle() {
+		return rect;
+	}
+	
+	public Tile getTileType() {
+		return tileType;
+	}
+	
+	public void highlight() {
+		switch( tileType ) {
+		case PLAYER: 
+			rect.setFill(Color.RED);
+			break;
+		case WALL:
+			rect.setFill(Color.BLUE);
+			break;
+		case INTERSECT:
+			rect.setFill(Color.GREEN);
+			break;
+		}
+	}
+	
+	public void unhighlight() {
 		switch( tileType ) {
 		case PLAYER: 
 			rect.setFill(Color.GREY);
@@ -32,15 +58,6 @@ public class TileView {
 			rect.setFill(Color.BEIGE);
 			break;
 		}
-		
-	}
-	
-	public Rectangle getRectangle() {
-		return rect;
-	}
-	
-	public Tile getTileType() {
-		return tileType;
 	}
 	
 	

@@ -13,11 +13,11 @@ public class Player {
 		
 		if(playerNum==1) {
 			xPos = 0;
-			yPos = 9;
+			yPos = 8;
 		}
 		else if(playerNum==2) {
 			xPos = 16;
-			yPos = 9;
+			yPos = 8;
 		}
 	}
 	

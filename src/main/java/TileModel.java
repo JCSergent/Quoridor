@@ -4,6 +4,7 @@ public class TileModel {
 	Tile tileType;
 	int x;
 	int y;
+	Player isOccupied;
 	
 	
 	public TileModel(Tile tileType, int x, int y) {

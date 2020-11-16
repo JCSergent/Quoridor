@@ -30,6 +30,8 @@ public class GameBoard {
 	
 	public void movePlayer(Player player, int newX, int newY) {
 		
+		gameBoard[player.getY()][player.getX()].setOccupied(null);
+		gameBoard[newY][newX].setOccupied(player);
 	}
 	
 }
